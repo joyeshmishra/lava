@@ -127,23 +127,23 @@ class PyLoihiProcessModel(AbstractPyProcessModel):
                     elif enum_equal(cmd,
                                     PyLoihiProcessModel.Phase.PRE_MGMT):
                         # Enable via guard method
+                        phase = PyLoihiProcessModel.Phase.PRE_MGMT
                         if self.pre_guard():
-                            phase = PyLoihiProcessModel.Phase.PRE_MGMT
                             self.run_pre_mgmt()
                         self.process_to_service.send(MGMT_RESPONSE.DONE)
                     # Learning phase
                     elif enum_equal(cmd, PyLoihiProcessModel.Phase.LRN):
                         # Enable via guard method
+                        phase = PyLoihiProcessModel.Phase.LRN
                         if self.lrn_guard():
-                            phase = PyLoihiProcessModel.Phase.LRN
                             self.run_lrn()
                         self.process_to_service.send(MGMT_RESPONSE.DONE)
                     # Post-management phase
                     elif enum_equal(cmd,
                                     PyLoihiProcessModel.Phase.POST_MGMT):
                         # Enable via guard method
+                        phase = PyLoihiProcessModel.Phase.POST_MGMT
                         if self.post_guard():
-                            phase = PyLoihiProcessModel.Phase.POST_MGMT
                             self.run_post_mgmt()
                         self.process_to_service.send(MGMT_RESPONSE.DONE)
                     # Host phase - called at the last time step before STOP
@@ -170,7 +170,6 @@ class PyLoihiProcessModel(AbstractPyProcessModel):
                     raise inst
             else:
                 # Handle VarPort requests from RefPorts
-                print("Got refport request")
                 self._handle_var_port(action)
 
             channel_actions = [(self.service_to_process, lambda: 'cmd')]
